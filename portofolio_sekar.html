@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sekar Ayu Ninggar Faustine – Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --bg:      #F4F4F6;
+      --bg2:     #EEEEF2;
+      --primary: #6C63FF;
+      --accent:  #A78BFA;
+      --dark:    #1A1A2E;
+      --muted:   #7B7B99;
+      --white:   #FFFFFF;
+      --border:  rgba(108,99,255,0.15);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--dark);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    .cursor {
+      position: fixed; width: 10px; height: 10px;
+      background: var(--primary); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%);
+    }
+    .cursor-ring {
+      position: fixed; width: 36px; height: 36px;
+      border: 1.5px solid var(--primary); border-radius: 50%;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: all 0.18s ease; opacity: 0.6;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 70px;
+      background: rgba(244,244,246,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(108,99,255,0.08);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600; font-size: 1.3rem;
+      letter-spacing: 0.04em; color: var(--dark);
+    }
+    .nav-logo span { color: var(--primary); }
+    .nav-links {
+      display: flex; gap: 36px;
+      position: absolute; left: 50%; transform: translateX(-50%);
+    }
+    .nav-links a {
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em;
+      text-transform: uppercase; text-decoration: none;
+      color: var(--muted); transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+    .nav-links a.active { font-weight: 600; }
+    .nav-hire {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; text-decoration: none;
+      color: var(--white); background: var(--primary);
+      padding: 9px 22px; border-radius: 999px;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .nav-hire:hover { background: #5a52d5; transform: translateY(-1px); }
+
+    .social-bar {
+      position: fixed; left: 28px; bottom: 40px; z-index: 400;
+      display: flex; flex-direction: column; align-items: center; gap: 14px;
+    }
+    .social-bar::after {
+      content: ''; display: block; width: 1px; height: 60px;
+      background: var(--muted); opacity: 0.4; margin-top: 6px;
+    }
+    .social-bar a {
+      width: 30px; height: 30px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted); text-decoration: none;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em;
+      transition: color 0.2s, transform 0.2s;
+    }
+    .social-bar a:hover { color: var(--primary); transform: translateY(-3px); }
+
+    .scroll-bar {
+      position: fixed; right: 28px; bottom: 40px; z-index: 400;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+    }
+    .scroll-bar::before {
+      content: ''; display: block; width: 1px; height: 60px;
+      background: var(--muted); opacity: 0.4;
+    }
+    .scroll-text {
+      writing-mode: vertical-rl; text-orientation: mixed;
+      font-size: 0.62rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--muted); opacity: 0.7;
+    }
+
+    #hero {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 55% 45%;
+      position: relative; overflow: hidden;
+    }
+
+    .hero-left {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 100px 60px 80px 100px;
+      position: relative; z-index: 2;
+    }
+    .hello-line {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+      opacity: 0; animation: slideRight 0.7s 0.3s forwards;
+    }
+    .hello-dash { display: block; width: 28px; height: 1.5px; background: var(--primary); }
+    .hello-text { font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.2rem, 5.5vw, 5.2rem);
+      font-weight: 700; line-height: 1.05;
+      letter-spacing: -0.01em; margin-bottom: 18px;
+      opacity: 0; animation: slideRight 0.75s 0.45s forwards;
+    }
+    .hero-name em { font-style: italic; color: var(--primary); font-weight: 300; }
+
+    .hero-tagline {
+      font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--primary); font-weight: 600; margin-bottom: 18px;
+      opacity: 0; animation: slideRight 0.75s 0.55s forwards;
+    }
+    .hero-desc {
+      font-size: 0.92rem; color: var(--muted); line-height: 1.8;
+      max-width: 380px; margin-bottom: 40px;
+      opacity: 0; animation: slideRight 0.75s 0.65s forwards;
+    }
+    .hero-btns {
+      display: flex; gap: 14px; flex-wrap: wrap;
+      opacity: 0; animation: slideRight 0.75s 0.8s forwards;
+    }
+    .btn-fill {
+      background: var(--primary); color: var(--white);
+      padding: 14px 32px; border-radius: 4px;
+      font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 6px 24px rgba(108,99,255,0.30);
+    }
+    .btn-fill:hover { background: #5a52d5; transform: translateY(-2px); box-shadow: 0 10px 32px rgba(108,99,255,0.40); }
+    .btn-line {
+      background: transparent; color: var(--dark);
+      padding: 13px 30px; border-radius: 4px;
+      font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none;
+      border: 1.5px solid rgba(26,26,46,0.25);
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+    .btn-line:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
+
+    .hero-mini-stats {
+      display: flex; gap: 28px; margin-top: 48px;
+      opacity: 0; animation: slideRight 0.75s 0.95s forwards;
+    }
+    .mini-stat strong {
+      display: block; font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; font-weight: 700; line-height: 1; color: var(--dark);
+    }
+    .mini-stat strong span { color: var(--primary); }
+    .mini-stat p { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+    .mini-sep { width: 1px; background: var(--border); align-self: stretch; }
+
+    .hero-right {
+      position: relative; overflow: hidden;
+      display: flex; align-items: flex-end; justify-content: center;
+    }
+    .hero-circle {
+      position: absolute; width: 500px; height: 500px; border-radius: 50%;
+      background: linear-gradient(145deg, #ddd8ff 0%, #c7d2fe 55%, #bfdbfe 100%);
+      top: 50%; left: 50%;
+      transform: translate(-42%, -50%);
+      animation: pulse 7s ease-in-out infinite alternate;
+    }
+    @keyframes pulse {
+      from { transform: translate(-42%,-50%) scale(1); }
+      to   { transform: translate(-42%,-50%) scale(1.05); }
+    }
+    .hero-avatar {
+      position: relative; z-index: 2;
+      width: 360px; height: 460px;
+      opacity: 0; animation: fadeUp 1s 0.6s forwards;
+    }
+    .avatar-box {
+      width: 100%; height: 100%;
+      background: linear-gradient(160deg, #e0e7ff 0%, #c7d2fe 60%, #bfdbfe 100%);
+      border-radius: 14px 14px 0 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 14px;
+    }
+    .av-emoji { font-size: 5.5rem; opacity: 0.55; }
+    .av-hint { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); opacity: 0.55; }
+
+    .f-card {
+      position: absolute; z-index: 4;
+      background: white; border-radius: 12px;
+      padding: 14px 18px;
+      box-shadow: 0 8px 32px rgba(108,99,255,0.14);
+    }
+    .f-card.fc-1 { top: 22%; left: 2%; animation: floatY 4s ease-in-out infinite alternate; }
+    .f-card.fc-2 { bottom: 16%; right: 4%; animation: floatY 4s 2s ease-in-out infinite alternate; }
+    @keyframes floatY { from{transform:translateY(0)} to{transform:translateY(-10px)} }
+    .fc-lbl { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+    .fc-val { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 700; color: var(--dark); line-height: 1; }
+    .fc-val span { color: var(--primary); }
+    .fc-sub { font-size: 0.68rem; color: var(--muted); margin-top: 2px; }
+
+    .geo { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; opacity: 0.07; }
+
+    .brush {
+      position: absolute; z-index: 1; border-radius: 50%; filter: blur(20px);
+    }
+    .brush-a { width: 160px; height: 90px; background: rgba(167,139,250,0.25); top: 28%; right: -20px; border-radius: 60% 40% 30% 70%/60% 30% 70% 40%; }
+    .brush-b { width: 110px; height: 75px; background: rgba(108,99,255,0.15); bottom: 28%; left: 8%;  border-radius: 40% 60% 70% 30%/40% 50% 60% 50%; }
+
+    @keyframes slideRight { from{opacity:0;transform:translateX(-22px)} to{opacity:1;transform:translateX(0)} }
+    @keyframes fadeUp     { from{opacity:0;transform:translateY(18px)}  to{opacity:1;transform:translateY(0)} }
+
+    #strip {
+      background: var(--dark); padding: 0 100px;
+      display: flex; align-items: center; overflow: hidden;
+    }
+    .s-item {
+      flex: 1; padding: 34px 32px;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; gap: 16px;
+      opacity: 0; animation: fadeUp 0.6s forwards;
+    }
+    .s-item:last-child { border-right: none; }
+    .s-item:nth-child(1){animation-delay:0.1s}
+    .s-item:nth-child(2){animation-delay:0.2s}
+    .s-item:nth-child(3){animation-delay:0.3s}
+    .s-item:nth-child(4){animation-delay:0.4s}
+    .s-ic { font-size: 1.4rem; }
+    .s-tx strong { display: block; font-size: 0.83rem; font-weight: 600; color: white; margin-bottom: 3px; }
+    .s-tx span   { font-size: 0.72rem; color: rgba(255,255,255,0.42); }
+
+    .wrap { max-width: 1080px; margin: 0 auto; }
+    .s-tag {
+      font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--primary); font-weight: 600; margin-bottom: 12px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .s-tag::before { content:''; display:block; width:20px; height:1.5px; background:var(--primary); }
+    .s-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3.5vw, 2.9rem);
+      font-weight: 600; line-height: 1.15; margin-bottom: 14px;
+    }
+    .s-heading em { font-style: italic; color: var(--primary); }
+    .see-more {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 44px; font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--primary); text-decoration: none;
+      border-bottom: 1.5px solid var(--primary); padding-bottom: 2px;
+      transition: gap 0.2s;
+    }
+    .see-more:hover { gap: 14px; }
+
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    #about { padding: 110px 100px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .about-body { font-size: 0.9rem; color: var(--muted); line-height: 1.85; margin-bottom: 28px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 6px; }
+    .chip {
+      border: 1px solid var(--border); border-radius: 4px;
+      padding: 6px 16px; font-size: 0.74rem; font-weight: 500; color: var(--dark);
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .chip:hover { background: var(--primary); color: white; border-color: var(--primary); }
+    .af-list { display: flex; flex-direction: column; gap: 2px; }
+    .af-row {
+      display: flex; align-items: center; gap: 18px; padding: 17px 20px; border-radius: 8px;
+      transition: background 0.2s, transform 0.2s; cursor: default;
+    }
+    .af-row:hover { background: white; transform: translateX(6px); box-shadow: 0 4px 20px rgba(108,99,255,0.09); }
+    .af-n { font-family: 'Cormorant Garamond',serif; font-size: 1.1rem; font-weight: 700; color: var(--primary); min-width: 28px; }
+    .af-i strong { font-size: 0.87rem; font-weight: 600; color: var(--dark); display: block; }
+    .af-i span   { font-size: 0.77rem; color: var(--muted); }
+
+    #skills { background: var(--bg2); padding: 110px 100px; }
+    .sk-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 14px; margin-top: 48px; }
+    .sk-card {
+      background: white; border-radius: 8px; padding: 28px 20px;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+    }
+    .sk-card:hover { border-bottom-color: var(--primary); transform: translateY(-6px); box-shadow: 0 12px 36px rgba(108,99,255,0.12); }
+    .sk-ic { font-size: 1.8rem; margin-bottom: 14px; display: block; }
+    .sk-nm { font-size: 0.87rem; font-weight: 600; color: var(--dark); margin-bottom: 8px; }
+    .sk-ds { font-size: 0.75rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── EXPERIENCE ── */
+    #experience { padding: 110px 100px; }
+    .exp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 48px; }
+    .exp-card {
+      background: var(--bg2); border-radius: 8px; padding: 28px;
+      border-left: 3px solid transparent;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .exp-card:hover { border-left-color: var(--primary); background: white; transform: translateX(4px); box-shadow: 0 6px 28px rgba(108,99,255,0.10); }
+    .exp-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+    .exp-role { font-size: 0.94rem; font-weight: 600; color: var(--dark); }
+    .exp-badge { font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; background: rgba(108,99,255,0.1); color: var(--primary); padding: 4px 12px; border-radius: 999px; font-weight: 600; }
+    .exp-co { font-size: 0.76rem; color: var(--primary); font-weight: 500; margin-bottom: 14px; }
+    .exp-pts { display: flex; flex-direction: column; gap: 6px; }
+    .exp-pt { font-size: 0.8rem; color: var(--muted); display: flex; gap: 8px; }
+    .exp-pt::before { content:'—'; color: var(--primary); flex-shrink: 0; }
+    .exp-ach { margin-top: 14px; padding: 10px 14px; background: rgba(108,99,255,0.07); border-radius: 6px; font-size: 0.77rem; color: var(--primary); font-weight: 600; }
+
+    /* ── PROJECTS ── */
+    #projects { background: var(--bg2); padding: 110px 100px; }
+    .proj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 48px; }
+    .proj-card {
+      background: white; border-radius: 12px; overflow: hidden;
+      border: 1px solid rgba(108,99,255,0.10);
+      transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column;
+    }
+    .proj-card:hover { transform: translateY(-8px); box-shadow: 0 16px 48px rgba(108,99,255,0.16); }
+    .proj-th {
+  height: 155px;
+  overflow: hidden;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.proj-th img {
+  width: 100%;
+  height: 100%;
+
+}
+    .proj-bd { padding: 26px; flex: 1; }
+    .proj-nm { font-size: 1rem; font-weight: 600; color: var(--dark); margin-bottom: 8px; }
+    .proj-ds { font-size: 0.8rem; color: var(--muted); line-height: 1.65; margin-bottom: 14px; }
+    .proj-tg { display: flex; flex-wrap: wrap; gap: 6px; }
+    .proj-t { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.06em; border: 1px solid var(--border); border-radius: 4px; padding: 3px 10px; color: var(--muted); }
+
+    /* ── CONTACT ── */
+    #contact { padding: 130px 100px; display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; overflow: hidden; }
+    #contact::before { content:''; position: absolute; width: 700px; height: 700px; border-radius: 50%; background: radial-gradient(circle, rgba(108,99,255,0.07), transparent 65%); top:50%; left:50%; transform:translate(-50%,-50%); pointer-events:none; }
+    .cta-tag { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--primary); font-weight: 600; margin-bottom: 18px; }
+    .cta-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem,5vw,4.5rem); font-weight: 700; line-height: 1.1; margin-bottom: 20px; }
+    .cta-title em { font-style: italic; color: var(--primary); }
+    .cta-sub { font-size: 0.91rem; color: var(--muted); max-width: 420px; line-height: 1.75; margin-bottom: 44px; }
+    .cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--dark); color: rgba(255,255,255,0.35); text-align: center; padding: 28px; font-size: 0.74rem; letter-spacing: 0.04em; }
+    footer strong { color: rgba(255,255,255,0.65); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      #hero { grid-template-columns: 1fr; }
+      .hero-left { padding: 120px 40px 60px; }
+      .hero-right { display: none; }
+      #about { grid-template-columns: 1fr; padding: 80px 40px; }
+      #skills, #experience, #projects, #contact { padding: 80px 40px; }
+      #strip { padding: 0 40px; flex-wrap: wrap; }
+      .sk-grid { grid-template-columns: repeat(3,1fr); }
+      .nav-links { display: none; }
+      .social-bar, .scroll-bar { display: none; }
+    }
+    @media (max-width: 680px) {
+      .exp-grid, .proj-grid { grid-template-columns: 1fr; }
+      .sk-grid { grid-template-columns: 1fr 1fr; }
+      .hero-left { padding: 110px 24px 60px; }
+      #about, #skills, #experience, #projects, #contact { padding: 70px 24px; }
+      #strip { padding: 0 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-logo">S<span>.</span>Ayu</div>
+    <div class="nav-links">
+      <a href="#hero" class="active">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Portfolio</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <!-- EDIT: ganti href ke halaman detail -->
+    <a href="index.html" class="nav-hire">Full Portfolio →</a>
+  </nav>
+
+  <!-- Social left -->
+  <div class="social-bar">
+    <a href="#" title="LinkedIn">in</a>
+    <a href="#" title="GitHub">gh</a>
+    <a href="#" title="Email">@</a>
+  </div>
+  <!-- Scroll right -->
+  <div class="scroll-bar">
+    <span class="scroll-text">Scroll Down</span>
+  </div>
+
+  <!-- ══════════════ HERO ══════════════ -->
+  <section id="hero">
+    <div class="hero-left">
+      <div class="hello-line">
+        <span class="hello-dash"></span>
+        <span class="hello-text">Hello, Selamat Datang</span>
+      </div>
+      <!-- EDIT: nama -->
+      <h1 class="hero-name">Saya <em>Sekar</em><br/>Ayu Ninggar<br/>Faustine</h1>
+      <!-- EDIT: tagline -->
+      <p class="hero-tagline">Digital Administration · E-commerce · Web Dev</p>
+      <!-- EDIT: deskripsi -->
+      <p class="hero-desc">E-commerce administrator berbasis data dengan pengalaman mendukung operasional penjualan online melalui pengelolaan data dan monitoring marketplace di Slashtech.id.</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-fill">Hubungi Saya</a>
+        <!-- EDIT: ganti href ke PDF CV -->
+        <a href="#" class="btn-line">Download CV</a>
+      </div>
+      <div class="hero-mini-stats">
+        <div class="mini-stat"><strong>±<span>8</span></strong><p>Bulan Pengalaman</p></div>
+        <div class="mini-sep"></div>
+        <div class="mini-stat"><strong><span>123</span></strong><p>Produk Terjual</p></div>
+        <div class="mini-sep"></div>
+        <div class="mini-stat"><strong><span>300</span></strong><p>Broadcast/Minggu</p></div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-circle"></div>
+      <div class="brush brush-a"></div>
+      <div class="brush brush-b"></div>
+
+      <!-- Floating card 1 -->
+      <div class="f-card fc-1">
+        <div class="fc-lbl">Produk Terjual</div>
+        <div class="fc-val"><span>123</span></div>
+        <div class="fc-sub">dalam 4 bulan</div>
+      </div>
+
+      <!-- Avatar — EDIT: ganti dengan tag <img src="foto.jpg"/> -->
+      <div class="hero-avatar">
+        <div class="avatar-box">
+          <img src="images/pas_photo.png" alt="Foto Sekar" class="avatar-img">
+        </div>
+      </div>
+
+      <!-- Floating card 2 -->
+      <div class="f-card fc-2">
+        <div class="fc-lbl">Broadcast Chat</div>
+        <div class="fc-val"><span>300</span>/mg</div>
+        <div class="fc-sub">Shopee & TikTok</div>
+      </div>
+
+      <svg class="geo" viewBox="0 0 600 700" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="500" cy="100" r="120" stroke="#6C63FF" stroke-width="1"/>
+        <circle cx="500" cy="100" r="75"  stroke="#6C63FF" stroke-width="0.5"/>
+        <line   x1="380" y1="100" x2="200" y2="300" stroke="#6C63FF" stroke-width="0.5"/>
+        <circle cx="80"  cy="580" r="55"  stroke="#A78BFA" stroke-width="0.8"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ══════════════ DARK STRIP ══════════════ -->
+  <div id="strip">
+    <div class="s-item"><span class="s-ic">🏪</span><div class="s-tx"><strong>E-Commerce Operations</strong><span>Shopee & TikTok Shop</span></div></div>
+    <div class="s-item"><span class="s-ic">📦</span><div class="s-tx"><strong>Inventory Management</strong><span>Stock opname & tracking</span></div></div>
+    <div class="s-item"><span class="s-ic">🎥</span><div class="s-tx"><strong>Live Commerce</strong><span>Live selling & monitoring</span></div></div>
+    <div class="s-item"><span class="s-ic">💻</span><div class="s-tx"><strong>Web Development</strong><span>Dashboard POS & Web App</span></div></div>
+  </div>
+
+  <!-- ══════════════ ABOUT ══════════════ -->
+  <section id="about">
+    <div class="reveal">
+      <div class="s-tag">About Me</div>
+      <h2 class="s-heading">Mengelola data,<br/><em>mendorong hasil nyata.</em></h2>
+      <p class="about-body">Saya memiliki pengalaman ±8 bulan magang industri dalam mendukung operasional e-commerce di Slashtech.id. Pengalaman ini memperkuat kemampuan saya dalam pengelolaan data stok dan penjualan, monitoring marketplace, serta membangun pemahaman menyeluruh terhadap proses bisnis digital. Saya juga mengembangkan dua produk digital mandiri sebagai Web Developer Intern.</p>
+      <div class="chips">
+        <span class="chip">📊 Data-driven</span>
+        <span class="chip">🏪 E-commerce</span>
+        <span class="chip">💻 Web Dev</span>
+        <span class="chip">📦 Inventory</span>
+        <span class="chip">🎥 Live Commerce</span>
+      </div>
+      <a href="index.html#about" class="see-more">Selengkapnya →</a>
+    </div>
+    <div class="af-list reveal" style="transition-delay:0.15s">
+      <div class="af-row"><div class="af-n">01</div><div class="af-i"><strong>E-Commerce Operations</strong><span>Shopee & TikTok Shop management</span></div></div>
+      <div class="af-row"><div class="af-n">02</div><div class="af-i"><strong>Inventory Management</strong><span>Stock opname & pelacakan produk</span></div></div>
+      <div class="af-row"><div class="af-n">03</div><div class="af-i"><strong>Live Commerce Support</strong><span>Live selling TikTok & Shopee</span></div></div>
+      <div class="af-row"><div class="af-n">04</div><div class="af-i"><strong>Sales Data & Reporting</strong><span>Analisis & visualisasi penjualan</span></div></div>
+      <div class="af-row"><div class="af-n">05</div><div class="af-i"><strong>Web Development</strong><span>Dashboard POS, Jejak Sketsa, Supabase</span></div></div>
+    </div>
+  </section>
+
+  <!-- ══════════════ SKILLS ══════════════ -->
+  <section id="skills">
+    <div class="reveal">
+      <div class="s-tag">Skills</div>
+      <h2 class="s-heading">Apa yang <em>Saya Kuasai?</em></h2>
+    </div>
+    <div class="sk-grid">
+      <div class="sk-card reveal" style="transition-delay:0.05s"><span class="sk-ic">🏪</span><div class="sk-nm">Operations</div><div class="sk-ds">Marketplace, pemantauan pesanan, listing produk, promo & flash sale.</div></div>
+      <div class="sk-card reveal" style="transition-delay:0.10s"><span class="sk-ic">🛠️</span><div class="sk-nm">Tools</div><div class="sk-ds">Shopee Seller Center, TikTok SC, Spreadsheet, Google Docs.</div></div>
+      <div class="sk-card reveal" style="transition-delay:0.15s"><span class="sk-ic">📦</span><div class="sk-nm">Inventory</div><div class="sk-ds">Stock opname, pelacakan inventaris, validasi data produk.</div></div>
+      <div class="sk-card reveal" style="transition-delay:0.20s"><span class="sk-ic">📊</span><div class="sk-nm">Data & Reporting</div><div class="sk-ds">Pelaporan penjualan, spreadsheet, analisis stok & performa.</div></div>
+      <div class="sk-card reveal" style="transition-delay:0.25s"><span class="sk-ic">💻</span><div class="sk-nm">Web Dev</div><div class="sk-ds">Web app, Supabase, CRUD, database dasar, UI/UX wireframe.</div></div>
+    </div>
+    <div style="text-align:center"><a href="index.html#skills" class="see-more reveal">Lihat detail semua skill →</a></div>
+  </section>
+
+  <!-- ══════════════ EXPERIENCE ══════════════ -->
+  <section id="experience">
+    <div class="reveal">
+      <div class="s-tag">Experience</div>
+      <h2 class="s-heading">Pengalaman <em>Kerja</em></h2>
+    </div>
+    <div class="exp-grid">
+      <div class="exp-card reveal" style="transition-delay:0.05s">
+        <div class="exp-top"><div class="exp-role">Admin Marketing & E-commerce</div><span class="exp-badge">Current</span></div>
+        <div class="exp-co">Slashtech.id · Jun 2025 – Present</div>
+        <div class="exp-pts">
+          <div class="exp-pt">Mengelola operasional Shopee & TikTok Shop</div>
+          <div class="exp-pt">Stock opname & monitoring inventory</div>
+          <div class="exp-pt">Monitoring performa penjualan</div>
+        </div>
+        <div class="exp-ach">🏆 123 produk terjual dalam 6 bulan</div>
+      </div>
+      <div class="exp-card reveal" style="transition-delay:0.10s">
+        <div class="exp-top"><div class="exp-role">Live Commerce Experience</div><span class="exp-badge">Current</span></div>
+        <div class="exp-co">Slashtech.id · Jun 2025 – Present</div>
+        <div class="exp-pts">
+          <div class="exp-pt">Live selling di TikTok Shop & Shopee Live</div>
+          <div class="exp-pt">Menyiapkan produk live & etalase</div>
+          <div class="exp-pt">Monitoring transaksi real-time</div>
+        </div>
+      </div>
+      <div class="exp-card reveal" style="transition-delay:0.15s">
+        <div class="exp-top"><div class="exp-role">Shopee Broadcast Execution</div><span class="exp-badge">Current</span></div>
+        <div class="exp-co">Slashtech.id · Jun 2025 – Present</div>
+        <div class="exp-pts">
+          <div class="exp-pt">Broadcast rutin 5x per minggu</div>
+          <div class="exp-pt">Menyusun pesan promo & diskon</div>
+          <div class="exp-pt">Evaluasi & optimasi performa toko</div>
+        </div>
+        <div class="exp-ach">📣 300 broadcast chat per minggu</div>
+      </div>
+      <div class="exp-card reveal" style="transition-delay:0.20s">
+        <div class="exp-top"><div class="exp-role">Web Developer Intern</div><span class="exp-badge">Current</span></div>
+        <div class="exp-co">Slashtech.id · Jun 2025 – Present</div>
+        <div class="exp-pts">
+          <div class="exp-pt">Dashboard POS UMKM dengan Supabase</div>
+          <div class="exp-pt">Desain UI, wireframe, CRUD data</div>
+          <div class="exp-pt">Web app mandiri "Jejak Sketsa"</div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center"><a href="index.html#experience" class="see-more reveal">Lihat detail pengalaman →</a></div>
+  </section>
+
+  <!-- ══════════════ PROJECTS ══════════════ -->
+  <section id="projects">
+    <div class="reveal">
+      <div class="s-tag">Portfolio</div>
+      <h2 class="s-heading">Proyek <em>Digital</em></h2>
+    </div>
+    <div class="proj-grid">
+
+  <!-- CARD 1 -->
+  <div class="proj-card reveal" style="transition-delay:0.05s">
+    <div class="proj-th">
+      <img src="images/proyek_warlontar.png" alt="">
+    </div>
+    <div class="proj-bd">
+      <div class="proj-nm">Dashboard POS UMKM</div>
+      <div class="proj-ds">
+        Dashboard Point of Sale terintegrasi untuk pengelolaan produk, transaksi, stock opname, dan laporan penjualan UMKM.
+      </div>
+      <div class="proj-tg">
+        <span class="proj-t">Web App</span>
+        <span class="proj-t">Supabase</span>
+        <span class="proj-t">Dashboard</span>
+        <span class="proj-t">UMKM</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 2 -->
+  <div class="proj-card reveal" style="transition-delay:0.10s">
+    <div class="proj-th">
+      <img src="images/proyek_jejak.png" alt="Landing Page Jejak Sketsa">
+    </div>
+    <div class="proj-bd">
+      <div class="proj-nm">Jejak Sketsa</div>
+      <div class="proj-ds">
+        Platform web app untuk membantu anak muda mengasah skill menggambar dengan fitur feedback otomatis berbasis AI.
+      </div>
+      <div class="proj-tg">
+        <span class="proj-t">Web App</span>
+        <span class="proj-t">AI Feedback</span>
+        <span class="proj-t">Vibe Coding</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+  <!-- ══════════════ CONTACT ══════════════ -->
+  <section id="contact">
+    <div class="reveal" style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center">
+      <div class="cta-tag">Get In Touch</div>
+      <h2 class="cta-title">Mari<br/><em>Berkolaborasi</em></h2>
+      <p class="cta-sub">Saya terbuka untuk peluang kerja di bidang Digital Administration, E-commerce, maupun Web Development.</p>
+      <div class="cta-row">
+        <!-- EDIT: ganti email asli -->
+        <a href="mailto:sekarayu1222@email.com" class="btn-fill">✉ Hire Me</a>
+        <a href="index.html" class="btn-line">Lihat Portfolio Lengkap</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 <strong>Sekar Ayu Ninggar Faustine</strong> · Digital Administration & E-commerce</p>
+    <p style="margin-top:5px;font-size:0.68rem;">Seluruh informasi pada website ini diambil dan disesuaikan dari dokumen portofolio pribadi.</p>
+  </footer>
+
+  <script>
+    /* Custom cursor */
+    const cur = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove', e=>{ mx=e.clientX; my=e.clientY; });
+    (function tick(){
+      cur.style.left=mx+'px'; cur.style.top=my+'px';
+      rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12;
+      ring.style.left=rx+'px'; ring.style.top=ry+'px';
+      requestAnimationFrame(tick);
+    })();
+    document.querySelectorAll('a,button').forEach(el=>{
+      el.addEventListener('mouseenter',()=>{ ring.style.transform='translate(-50%,-50%) scale(1.7)'; ring.style.opacity='0.3'; });
+      el.addEventListener('mouseleave',()=>{ ring.style.transform='translate(-50%,-50%) scale(1)';   ring.style.opacity='0.6'; });
+    });
+
+    /* Scroll reveal */
+    const obs = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    },{threshold:0.10});
+    document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+    /* Active nav */
+    const secs = document.querySelectorAll('section[id]');
+    const links = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll',()=>{
+      let cur='';
+      secs.forEach(s=>{ if(window.scrollY>=s.offsetTop-120) cur=s.id; });
+      links.forEach(a=>{ a.classList.toggle('active', a.getAttribute('href')==='#'+cur); });
+    });
+  </script>
+</body>
+</html>
